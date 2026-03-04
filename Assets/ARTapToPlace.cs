@@ -35,6 +35,24 @@ public class ARTapToPlace : MonoBehaviour
         
     }
 
+    public void ApplySelection(string baseName)
+    {
+        if (!furnitureInit.furnitureReal.ContainsKey(baseName))
+        {
+            Debug.LogError($"Real furniture '{baseName}' not found in furnitureReal. Check prefab names / FurnitureInit list.");
+            return;
+        }
+        objectToPlace = furnitureInit.furnitureReal[baseName];
+    
+        // Update ghost preview (your convention: ghost = baseName + '1')
+        if (!furnitureInit.furnitureGhosts.ContainsKey(baseName + "1"))
+        {
+            Debug.LogError($"Ghost furniture '{baseName}1' not found in furnitureGhosts. Check ghost prefab naming.");
+            return;
+        }
+        SwapGhost(baseName);
+    }
+
     private void PlaceObject()
     {
         Debug.Log("Object name: " + objectToPlace.name);
